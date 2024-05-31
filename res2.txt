@@ -1,0 +1,94 @@
+|| n=12;ub=10;f=0.5
+|| seed 1
+|| obj = 100;
+|| obj = 89;
+|| obj = 88;
+|| seed 2
+|| obj = 98;
+|| obj = 92;
+|| obj = 88;
+|| seed 3
+|| obj = 91;
+|| obj = 84;
+|| obj = 81;
+|| seed 4
+|| obj = 92;
+|| obj = 82;
+|| obj = 80;
+|| seed 5
+|| obj = 95;
+|| obj = 88;
+|| obj = 83;
+|| seed 6
+|| obj = 96;
+|| obj = 85;
+|| obj = 82;
+|| seed 7
+
+|| n=12;ub=10;f=0.75
+|| seed 1
+|| obj = 115;
+|| obj = 105;
+|| obj = 103;
+|| seed 2
+|| obj = 111;
+|| obj = 106;
+|| obj = 102;
+|| seed 3
+|| obj = 104;
+|| obj = 97;
+|| obj = 94;
+|| seed 4
+
+|| n=12;ub=15;f=0.5
+|| seed 1
+|| obj = 108;
+|| obj = 98;
+|| obj = 97;
+|| seed 2
+|| obj = 103;
+|| obj = 95;
+|| obj = 93;
+|| seed 3
+
+|| n=12;ub=10;f=0.35
+|| seed 1
+|| obj = 87;
+|| obj = 77;
+|| obj = 75;
+|| seed 2
+|| obj = 86;
+|| obj = 80;
+|| obj = 76;
+|| seed 3
+|| obj = 80;
+|| obj = 74;
+|| obj = 71;
+|| seed 4
+|| obj = 76;
+|| obj = 69;
+|| obj = 66;
+|| seed 5
+|| obj = 81;
+|| obj = 75;
+|| obj = 70;
+|| seed 6
+|| obj = 82;
+|| obj = 74;
+|| obj = 70;
+|| seed 7
+|| obj = 85;
+|| obj = 70;
+|| obj = 70;
+|| seed 8
+|| obj = 78;
+|| obj = 75;
+|| obj = 71;
+|| seed 9
+|| obj = 81;
+|| obj = 74;
+|| obj = 73;
+|| seed 10
+|| obj = 87;
+|| obj = 77;
+|| obj = 71;
