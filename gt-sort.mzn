@@ -7,17 +7,23 @@ Run: run::output;
 % BASELINE = false;
 
 % 2*x1 + 3*x2 + 2*x3 + 5*x4 <= k
-% array[int] of set of int: s = [{0,2},{0,3},{0,2},{0,5}];
+array[int] of int: c::output;
+
+% c = [2,3,2,5]; % same as baseline
+
+% c = [1,3,3,5]; % better by 1
+% f = 0.75;
 
 % generate instance of n variables with coefficients [1,ub]
-int: n;
-int: ub;
+int: n::output;
+int: ub::output;
+float: f::output; % k is chosen based on strictness factor f
 
-array[int] of int: c::output = reverse(sort([ uniform(1,ub) | i in 1..n ]));
-array[int] of set of int: s = [ {0, ci} | ci in c ];
+c = [ uniform(1,ub) | i in 1..n ];
+array[int] of set of int: s = [ {0, ci} | ci in reverse(sort(c)) ];
 
 int: u::output = sum([ max(si) | si in s]);
-int: k::output = round(0.5 * u);
+int: k::output = round(f * u);
 
 % number of layers
 set of int: L = 1..(floor(1+log2(max(index_set(s)))));
@@ -34,6 +40,7 @@ constraint forall(i in L diff {max(L)})( % for layer i, constrain parents in lay
     % y[j,1] is the index of the left child of parent node (i+1,j)
     array[1..pairs,1..2] of var 1..(2*pairs): y::output;
     constraint alldifferent(y);
+    constraint strictly_increasing(j in 1..pairs)(y[j,1]); % symmetry
     constraint if run = BASELINE then y = array2d(1..pairs, 1..2, [ z | z in 1..(pairs*2) ]) endif ;
   } in
   forall(j in index_set(s))(
