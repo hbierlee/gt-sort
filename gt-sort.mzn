@@ -19,23 +19,24 @@ int: n::output;
 int: ub::output;
 float: f::output; % k is chosen based on strictness factor f
 
-c = [ uniform(1,ub) | i in 1..n ];
+c = [ uniform(1,ub) | i in 1..n ] ++ if n mod 2 == 1 then [0] endif; % pad with 0 term if odd
 array[int] of set of int: s = [ {0, ci} | ci in reverse(sort(c)) ];
 
 int: u::output = sum([ max(si) | si in s]);
 int: k::output = round(f * u);
 
 % number of layers
-set of int: L = 1..(floor(1+log2(max(index_set(s)))));
+set of int: L = 1..(1+ceil(log2(length(c))));
 
 % x[i,j] = values of node j at layer i
 array[L,index_set(s)] of var set of min(si in s, a in si)(a)..k: x;
 
-constraint x[1,..] = s; % first layer is fixed
+constraint x[1,..] = s; % first layer is fixed (! sometimes causes a bug with nosets.mzn for chuffed)
 
 constraint forall(i in L diff {max(L)})( % for layer i, constrain parents in layer i+1
   let {
-    int: pairs = 2^(max(L) -1 -i);
+    int: pairs = ceil(length(c) / (2^i));
+    int: next_pow2 = 2^(pairs-1);
 
     % y[j,1] is the index of the left child of parent node (i+1,j)
     array[1..pairs,1..2] of var 1..(2*pairs): y::output;
@@ -56,6 +57,8 @@ constraint forall(i in L diff {max(L)})( % for layer i, constrain parents in lay
       % parent contains the all possible sums of child nodes
     (x[i+1,j] = { ai + bi | ai in a, bi in b where ai+bi <= k })
     % alternative which performs way worse: (x[i+1,j] = { min(ai + bi, k+1) | ai in a, bi in b })
+  elseif j <= next_pow2 then % handle layer with odd number of nodes by padding
+    x[i+1,j] = {0}
   else % unused nodes are fixed to empty
     x[i+1,j] = {}
   endif
