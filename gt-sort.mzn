@@ -65,5 +65,6 @@ constraint forall(i in L diff {max(L)})( % for layer i, constrain parents in lay
 ));
 
 % minimize sum of values in all nodes (includes first layer)
+% TODO don't count the 0's in the sets
 var int: obj ::output =  sum(xi in x)(card(xi));
 solve minimize if run = WORST then -obj else obj endif;
